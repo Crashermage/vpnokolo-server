@@ -64,7 +64,7 @@ docker stop amnezia-awg
 
 
 CONFIG_FILE="/opt/amnezia/awg/wg0.conf"
-SERVICE_FILE="/etc/systemd/system/black.service"
+SERVICE_FILE="/etc/systemd/system/vpnokolo.service"
 
 MASK=$(grep -oP 'Address\s*=\s*\K[^\s]+' $CONFIG_FILE)
 PORT=$(grep -oP 'ListenPort\s*=\s*\K\d+' $CONFIG_FILE)
@@ -87,6 +87,6 @@ WantedBy=multi-user.target" > $SERVICE_FILE
 
 systemctl daemon-reload
 
-systemctl enable black.service
-systemctl start black.service
+systemctl enable vpnokolo.service
+systemctl start vpnokolo.service
 iptables-save -t nat
