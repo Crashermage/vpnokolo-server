@@ -35,24 +35,7 @@ docker cp amnezia-awg:/opt/amnezia/awg/wireguard_server_public_key.key /opt/amne
 docker cp amnezia-awg:/opt/amnezia/awg/wireguard_psk.key /opt/amnezia/awg
 docker cp amnezia-awg:/opt/amnezia/awg/wg0.conf /opt/amnezia/awg
 
-
-#CONFIG_FILE="/opt/amnezia/awg/wg0.conf"
-#NEW_CONFIG_FILE="/opt/amnezia/awg/wg0.conf"
-
-#MASK=$(grep -oP 'Address\s*=\s*\K[^\s]+' $CONFIG_FILE)
-#
-#PORT=$(grep -oP 'ListenPort\s*=\s*\K\d+' $CONFIG_FILE)
-
-
-
-#iptables -t nat -A POSTROUTING -s $MASK -o eth0 -j MASQUERADE; iptables -A INPUT -p udp -m udp --dport $PORT -j ACCEPT; iptables -A FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o wg0 -j ACCEPT;
-#iptables -t nat -D POSTROUTING -s $MASK -o eth0 -j MASQUERADE; iptables -D INPUT -p udp -m udp --dport $PORT -j ACCEPT; iptables -D FORWARD -i wg0 -j ACCEPT; iptables -D FORWARD -o wg0 -j ACCEPT;
-
 docker stop amnezia-awg
-
-
-#wg-quick up /opt/amnezia/awg/wg0.conf
-
 
 CONFIG_FILE="/opt/amnezia/awg/wg0.conf"
 SERVICE_FILE="/etc/systemd/system/vpnokolo.service"
