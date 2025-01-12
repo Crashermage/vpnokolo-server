@@ -28,16 +28,16 @@ update-alternatives --install /sbin/iptables iptables /sbin/iptables-legacy 10 -
 rm -f /usr/bin/wg-quick
 ln -s /usr/bin/awg-quick /usr/bin/wg-quick
 apt-get install amneziawg -y
-mkdir -p /opt/amnezia/awg
+mkdir -p /etc/amnezia/amneziawg
 
-docker cp amnezia-awg:/opt/amnezia/awg/wireguard_server_private_key.key /opt/amnezia/awg
-docker cp amnezia-awg:/opt/amnezia/awg/wireguard_server_public_key.key /opt/amnezia/awg
-docker cp amnezia-awg:/opt/amnezia/awg/wireguard_psk.key /opt/amnezia/awg
-docker cp amnezia-awg:/opt/amnezia/awg/wg0.conf /opt/amnezia/awg
+docker cp amnezia-awg:/opt/amnezia/awg/wireguard_server_private_key.key /etc/amnezia/amneziawg
+docker cp amnezia-awg:/opt/amnezia/awg/wireguard_server_public_key.key /etc/amnezia/amneziawg
+docker cp amnezia-awg:/opt/amnezia/awg/wireguard_psk.key /etc/amnezia/amneziawg
+docker cp amnezia-awg:/opt/amnezia/awg/wg0.conf /etc/amnezia/amneziawg
 
 docker stop amnezia-awg
 
-CONFIG_FILE="/opt/amnezia/awg/wg0.conf"
+CONFIG_FILE="/etc/amnezia/amneziawg/wg0.conf"
 SERVICE_FILE="/etc/systemd/system/vpnokolo.service"
 
 MASK=$(grep -oP 'Address\s*=\s*\K[^\s]+' $CONFIG_FILE)
@@ -51,9 +51,9 @@ After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/wg-quick up /opt/amnezia/awg/wg0.conf
+ExecStart=/usr/bin/wg-quick up /etc/amnezia/amneziawg/wg0.conf
 ExecStartPost=/bin/bash -c '$IPTABLES_RULES'
-ExecStop=/usr/bin/wg-quick down /opt/amnezia/awg/wg0.conf
+ExecStop=/usr/bin/wg-quick down /etc/amnezia/amneziawg/wg0.conf
 RemainAfterExit=yes
 
 [Install]
