@@ -16,7 +16,7 @@ sysctl -p
 mkdir /app
 git clone https://github.com/amnezia-vpn/amneziawg-tools.git /app
 apt-get install -y make g++ gcc
-/app/amneziawg-tools/src && make && make install
+cd /app/src && make && make install
 ln -s /app/amneziawg-tools/src/wg /usr/bin/
 ln -s /app/amneziawg-tools/src/wg-quick/wg-quick /usr/bin/
 apt-get install -y \
