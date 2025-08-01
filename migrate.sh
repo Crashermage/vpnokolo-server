@@ -45,7 +45,6 @@ MASK=$(grep -oP 'Address\s*=\s*\K[^\s]+' $CONFIG_FILE)
 PORT=$(grep -oP 'ListenPort\s*=\s*\K\d+' $CONFIG_FILE)
 
 IPTABLES_RULES="iptables -t nat -A POSTROUTING -s $MASK -o eth0 -j MASQUERADE; iptables -A INPUT -p udp -m udp --dport $PORT -j ACCEPT; iptables -A FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o wg0 -j ACCEPT;"
-sudo wg-quick down wg0 #new
 
 echo "[Unit]
 Description=WireGuard via wg-quick
@@ -66,5 +65,6 @@ systemctl daemon-reload
 systemctl enable vpnokolo.service
 systemctl start vpnokolo.service
 iptables-save -t nat
+awg-quick down /etc/amnezia/amneziawg/wg0.conf
 awg-quick up /etc/amnezia/amneziawg/wg0.conf
 
