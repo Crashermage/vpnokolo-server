@@ -1,6 +1,7 @@
 #!/bin/bash
 
 touch /home/awgmode.txt
+sudo mkdir -p /vpn_okolo/scripts/
 echo "server" > /home/awgmode.txt
 sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
 apt-get -y update
@@ -65,3 +66,5 @@ systemctl daemon-reload
 systemctl enable vpnokolo.service
 systemctl start vpnokolo.service
 iptables-save -t nat
+awg-quick up /etc/amnezia/amneziawg/wg0.conf
+
