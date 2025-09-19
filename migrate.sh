@@ -63,6 +63,4 @@ systemctl daemon-reload
 systemctl enable vpnokolo.service
 systemctl start vpnokolo.service
 iptables-save -t nat
-awg-quick down /etc/amnezia/amneziawg/wg0.conf
-awg-quick up /etc/amnezia/amneziawg/wg0.conf
-
+awg-quick down /etc/amnezia/amneziawg/wg0.conf && awg-quick up /etc/amnezia/amneziawg/wg0.conf
