@@ -4,8 +4,7 @@ touch /home/awgmode.txt
 sudo mkdir -p /vpn_okolo/scripts/
 echo "server" > /home/awgmode.txt
 sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
-apt-get -y update
-apt-get -y upgrade
+apt-get -y update && apt-get -y upgrade
 apt-get install -y git software-properties-common python3-launchpadlib gnupg2 linux-headers-$(uname -r) zstd sudo
 add-apt-repository -y ppa:amnezia/ppa
 apt-get -y update
