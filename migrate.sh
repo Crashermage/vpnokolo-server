@@ -7,8 +7,7 @@ sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sourc
 apt-get -y update && apt-get -y upgrade
 apt-get install -y git software-properties-common python3-launchpadlib gnupg2 linux-headers-$(uname -r) zstd sudo
 add-apt-repository -y ppa:amnezia/ppa
-apt-get -y update
-apt-get -y upgrade
+apt-get -y update && apt-get -y upgrade
 echo "net.ipv4.ip_forward = 1" > /etc/sysctl.d/00-amnezia.conf
 echo net.ipv4.ip_forward=1 >> /etc/sysctl.conf
 echo net.ipv4.conf.all.src_valid_mark=1 >> /etc/sysctl.conf
