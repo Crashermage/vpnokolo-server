@@ -1,10 +1,18 @@
 # https://remna.st/docs/install/remnawave-panel
 apt-get -y update && apt-get -y upgrade
 
-sudo curl -fsSL https://get.docker.com | sh # ставим Docker
-mkdir /opt/remnawave && cd /opt/remnawave # создаем директорию для панели и переходим
-curl -o docker-compose.yml https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/docker-compose-prod.yml # ставим настройки для докера
-curl -o .env https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/.env.sample # .env файл с параметрами для запуска контейнеров
+# ставим Docker
+sudo curl -fsSL https://get.docker.com | sh
+
+# создаем директорию для панели и переходим
+mkdir /opt/remnawave && cd /opt/remnawave 
+
+# ставим настройки для докера
+curl -o docker-compose.yml https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/docker-compose-prod.yml
+
+# .env файл с параметрами для запуска контейнеров
+curl -o .env https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/.env.sample
+
 # создание ключей безопасности
 sed -i "s/^JWT_AUTH_SECRET=.*/JWT_AUTH_SECRET=$(openssl rand -hex 64)/" .env && sed -i "s/^JWT_API_TOKENS_SECRET=.*/JWT_API_TOKENS_SECRET=$(openssl rand -hex 64)/" .env
 
@@ -24,13 +32,12 @@ SUB_PUBLIC_DOMAIN=sub.vpn-okolo.com
 docker compose up -d && docker compose logs -f -t
 
 # выпускаем SSL сертификат
-sudo apt-get install cron socat # устанавливаем зависимости
+# устанавливаем зависимости
+sudo apt-get install cron socat 
 curl https://get.acme.sh | sh -s email=crashermage@gmail.com && source ~/.bashrc
-mkdir -p /opt/remnawave/nginx && cd /opt/remnawave/nginx # создаем папку для сертификатов
+# создаем папку для сертификатов
+mkdir -p /opt/remnawave/nginx && cd /opt/remnawave/nginx
 ufw enable && ufw allow OpenSSH
-ufw allow 8443/tcp # открываем порт для проверки домена
-ufw status numbered # смотрим открытые порты
-
 acme.sh --set-default-ca --server letsencrypt
 ufw allow 80/tcp
 acme.sh --issue --standalone -d 'remn.vpn-okolo.com' --key-file /opt/remnawave/nginx/privkey.key --fullchain-file /opt/remnawave/nginx/fullchain.pem
