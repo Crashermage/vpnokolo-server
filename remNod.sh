@@ -1,7 +1,9 @@
 apt-get -y update && apt-get -y upgrade
 
- ufw enable && ufw allow OpenSSH # включаем firewall, но оставляем порт 22 для SSH
- vim /etc/ufw/before.rules # настраиваем правило для запрета icmp запросов
+ # включаем firewall, но оставляем порт 22 для SSH
+ ufw enable && ufw allow OpenSSH
+ # настраиваем правило для запрета icmp запросов
+ vim /etc/ufw/before.rules 
  
  # ищем ok icmp code for INPUT  и ok icmp code for FORWARD
  меняем все ACCEPT на DROP
@@ -10,10 +12,13 @@ apt-get -y update && apt-get -y upgrade
  -A ufw-before-input -p icmp --icmp-type source-quench -j DROP
  
  ufw disable && ufw enable # перезапускаем firefall
- 
- sudo curl -fsSL https://get.docker.com | sh # устанавливаем docker
- mkdir /opt/remnanode && cd /opt/remnanode # создаем раб.директорию
- vim .env # редактируем файл конфига
+
+ # устанавливаем docker
+ sudo curl -fsSL https://get.docker.com | sh
+ # создаем раб.директорию
+ mkdir /opt/remnanode && cd /opt/remnanode
+ # редактируем файл конфига
+ vim .env 
 
 # вставляем 
 APP_PORT=2222
@@ -35,7 +40,7 @@ services:
  
  docker compose up -d && docker compose logs -f -t # запускаем нашу ноду
 
- ufw allow 1234/tcp
+# открываем порт для vless
  ufw allow 443/tcp
  
  
